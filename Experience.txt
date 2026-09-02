@@ -1,0 +1,14 @@
+In Unity, I have worked entirely in a 2D space. Primarily, I have experience with using objects and collisions with 
+different functions going off when certain conditions are met. Some things I have dabbled in a little bit are particle 
+systems and persistent game objects. In terms of programming, I have worked with sound, collisions (I know this is 
+redundant), conditionals, and a tiny bit of arrays. 
+
+On the topic of the most complicated thing I have done in Unity, I have made a wave system of enemy spawns. This 
+wave system created a finite number of waves with different enemies spawning in different vertical lanes. Lastly, each 
+wave occurred after a certain amount of seconds. All of this was done through an array (from what I can recall). Fyi, I 
+struggled so hard to get it to work.
+
+I find that when games use small quirks, such as being able to hit enemies through thin floors, for puzzles or 
+encounters it makes the game more fun and interesting. This is something I have only seen really in Hollow Knight and Silksong 
+though. One thing about programming is that I have easier time grasping the concepts in coding, rather than actually 
+knowing what code to use to said thing.
