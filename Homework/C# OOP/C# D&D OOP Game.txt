@@ -5,10 +5,6 @@ using System;
 // looks a bit different from original copy that the professor
 // made. 
 
-//Connor Hays
-//GDD 2200
-//9_30_2026
-
 //Players
 Player player1 = new Fighter(); //Player 1
 Player player2 = new Wizard(); //Player 2
