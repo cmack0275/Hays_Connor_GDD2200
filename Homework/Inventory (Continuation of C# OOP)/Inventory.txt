@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+
+//Note for the professor and TA - I screwed up by forgetting
+//to save the code from last week. Hence, why the code here 
+// looks a bit different from original copy that the professor
+// made. 
+
+//Note #2: This assignment is a continuation of the previous C# OOP assignment. Hence, I simply modified the original code I made from last time.
+
+public class RunGame{
+    public static void Main(string[] args){
+        //Inventory
+        List<Item> inventory = new List<Item>();
+
+        //Items
+        Item newItem = new Potion();
+
+        bool itemFound = false; //Default false as it needs to check for the item.
+
+        //Checks if an item already exists in the inventory.
+        foreach (Item items in inventory) {
+            if(items.getModelNum() == newItem.getModelNum()) {
+                int newQuantity = items.getQuantity();
+                newQuantity = newQuantity + 1;
+                items.setQuantity(newQuantity);
+                itemFound = true;
+                break;
+            }
+        }
+
+        //If no item is found, then it adds the item.
+        if (!itemFound){
+            inventory.Add(newItem);
+        }
+
+        //Players
+        Player player1 = new Fighter(); //Player 1
+        Player player2 = new Wizard(); //Player 2
+
+        inventory[0].ItemEffect(player1);
+        
+        game Game = new game(); //Creates da game
+        Game.kill(player1, player2); //Start da combat between players
+    }
+}
+
+public class game {
+    public void kill(Player play1, Player play2) {
+        Random rnd_num = new Random(); //Random number for damage later 
+
+        while (play1.HP > 0 && play2.HP > 0){
+            //Randomized damage based on rnd_num 
+            int dmg1 = rnd_num.Next(1, play2.ATK + 1); //Player 1
+            int dmg2 = rnd_num.Next(1, play1.ATK + 1); //Player 2
+
+            //Players take da damage
+            play1.HP -= dmg1; 
+            play2.HP -= dmg2;
+
+            //Print dat shit
+            Console.WriteLine("John Fighter dealt " + dmg1 + " damage to John Whizard.");
+            Console.WriteLine("Whizard's HP: " + play2.HP);
+            Console.WriteLine("John Whizard dealt " + dmg2 + " damage to John Fighter.");
+            Console.WriteLine("Fighter's HP: " + play1.HP);
+            Console.WriteLine();
+        }
+
+        //Both players live, sadly.
+        if (play1.HP <= 0 && play2.HP <= 0){
+            Console.WriteLine("Both Johns survived. It is a draw!");
+        }
+        
+        //Player 1 lost. :O
+        else if (play1.HP > 0){
+            Console.WriteLine("John Fighter won!");
+        }
+
+        //Player 2 lost. :D
+        else{
+            Console.WriteLine("John Whizard won!");
+        }
+    }
+      
+}
+
+public abstract class Player {
+    public int HP; //It's da health!
+    public int ATK; //It's da attack!
+}
+
+public class Fighter : Player { //Da Fighter!
+    public Fighter(){
+        HP = 23;
+        ATK = 5;
+    }
+}
+
+public class Wizard : Player { //Da Wizard!
+    public Wizard(){
+        HP = 16;
+        ATK = 7;
+    }
+}
+
+public abstract class Item {
+    public string name; //Name of the item
+    public int amount; //Number of the item
+    public int itemID; //ID number of the item
+    public bool isUsed; //If the item has been used or not
+
+    //Gets the item ID of the item
+    public int getModelNum(){
+        return itemID;
+    }
+
+    //Gets the number of said item
+    public int getQuantity(){
+        return amount;
+    }
+
+    //Sets the number of said item
+    public void setQuantity(int newQuantity){
+        amount = newQuantity;
+    }
+
+    //Effect of the item
+    public abstract void ItemEffect(Player play1);
+}
+
+//Creates the potion
+public class Potion : Item {
+    public Potion() {
+        name = "Healing Potion";
+        itemID = 1;
+        amount = 1;
+        isUsed = false;
+    }
+    
+    public override void ItemEffect(Player play1) {
+    	Console.WriteLine("Fighter's Current HP: " + play1.HP);
+    	play1.HP += 15; //Healing effect
+        amount -= 1; //Updates the amount of potions due to the player using one
+    	isUsed = true;
+    	Console.WriteLine("Number of Potions:" + amount);
+    	Console.WriteLine();
+    }
+}
