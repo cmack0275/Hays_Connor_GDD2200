@@ -6,7 +6,8 @@ using System.Collections.Generic;
 // looks a bit different from original copy that the professor
 // made. 
 
-//Note #2: This assignment is a continuation of the previous C# OOP assignment. Hence, I simply modified the original code I made from last time.
+//Note #2: This assignment is a continuation of the previous C# OOP assignment. 
+//Hence, I simply modified the original code I made from last time.
 
 public class RunGame{
     public static void Main(string[] args){
