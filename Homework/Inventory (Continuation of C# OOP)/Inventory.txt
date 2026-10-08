@@ -11,21 +11,21 @@ using System.Collections.Generic;
 
 public class RunGame{
     public static void Main(string[] args){
-        //Inventory
+        //A list or inventory of items that the player can use.
         List<Item> inventory = new List<Item>();
 
         //Items
-        Item newItem = new Potion();
+        Item newItem = new Potion(); //A healing potion item, initialized in newItem
 
         bool itemFound = false; //Default false as it needs to check for the item.
 
         //Checks if an item already exists in the inventory.
-        foreach (Item items in inventory) {
-            if(items.getModelNum() == newItem.getModelNum()) {
-                int newQuantity = items.getQuantity();
-                newQuantity = newQuantity + 1;
-                items.setQuantity(newQuantity);
-                itemFound = true;
+        foreach (Item items in inventory) { //For each item in inventory
+            if(items.getModelNum() == newItem.getModelNum()) { //If an item ID matches the ID of an item stored in newItem.
+                int newQuantity = items.getQuantity(); //Stores the current amount of an obtainable item. 
+                newQuantity = newQuantity + 1; //Adds one to the number of said item
+                items.setQuantity(newQuantity); //Sets the quantity of the item to the new value within the inventory
+                itemFound = true; //Flags that the item has been located
                 break;
             }
         }
@@ -86,8 +86,8 @@ public class game {
 }
 
 public abstract class Player {
-    public int HP; //It's da health!
-    public int ATK; //It's da attack!
+    public int HP; //A player's health or the value that will decrease when another player attacks
+    public int ATK; //A player's attack value that will be used in the calculation for damange allocation to another player.
 }
 
 public class Fighter : Player { //Da Fighter!
@@ -106,7 +106,7 @@ public class Wizard : Player { //Da Wizard!
 
 public abstract class Item {
     public string name; //Name of the item
-    public int amount; //Number of the item
+    public int amount; //Amount of the item
     public int itemID; //ID number of the item
     public bool isUsed; //If the item has been used or not
 
@@ -132,17 +132,17 @@ public abstract class Item {
 //Creates the potion
 public class Potion : Item {
     public Potion() {
-        name = "Healing Potion";
-        itemID = 1;
-        amount = 1;
-        isUsed = false;
+        name = "Healing Potion"; //String of the item's name
+        itemID = 1; //ID number for the item. Used in locating the item in the inventory.
+        amount = 1; //The value or amount of an item when it is picked up and added to the inventory.
+        isUsed = false; //Marked as false by default, so it can be "used" by the player later.
     }
     
     public override void ItemEffect(Player play1) {
     	Console.WriteLine("Fighter's Current HP: " + play1.HP);
-    	play1.HP += 15; //Healing effect
+    	play1.HP += 15; //Healing effect of the potion item. Increases the HP value when the player "uses" the item
         amount -= 1; //Updates the amount of potions due to the player using one
-    	isUsed = true;
+    	isUsed = true; //Marks the item as used.
     	Console.WriteLine("Number of Potions:" + amount);
     	Console.WriteLine();
     }
