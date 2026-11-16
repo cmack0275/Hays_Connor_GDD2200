@@ -4,11 +4,14 @@ public class BallSpawner : MonoBehaviour
 {
     //Contains the prefab of the ball that will spawn in random locations.
     public GameObject ballPrefab;
-    //A ball will spawn at least 10 units away from the camera.
-    public float lowerZLimit = 10f;
-    //A ball will spawn at most 15 units away from the camera.
-    public float upperZLimit = 15f;
-
+    
+    //A ball will spawn at least 5 units away from the spawn point either on the left or right sides.
+    public float xLimit = 5f;
+    //A ball will spawn at most 2 units away from the spawn point either above or below it.
+    public float yLimit = 2f;
+    //A ball will at most 5 units either behind or in front of the spawn point.
+    public float zLimit = 5f;
+    
     private void OnEnable()
     {
         //When the ball spawn button is pressed, the event manager enables OnClickBallSpawn and calls the SpawnBall method.
@@ -24,17 +27,19 @@ public class BallSpawner : MonoBehaviour
 
     private void SpawnBall()
     {
-        //A ball will spawn in between 10% and 90% of the camera's width. 
-        float ranX = Random.Range(0.1f, 0.9f);
-        //A ball will spawn in between 10% and 90% of the camera's height. 
-        float ranY = Random.Range(0.1f, 0.9f);
-        //A ball will spawn in between the lower and upper Z limits. 
-        float ranZ = Random.Range(lowerZLimit, upperZLimit);
+        //A ball will spawn in between in -5 and 5 units in the x direction from the spawn point. 
+        float ranX = Random.Range(-xLimit, xLimit);
+        //A ball will spawn in between in -2 and 2 units in the y direction from the spawn point. 
+        float ranY = Random.Range(-yLimit, yLimit);
+        //A ball will spawn in between in -5 and 5 units in the z direction from the spawn point. 
+        float ranZ = Random.Range(-zLimit, zLimit);
         
         //Stores the random X, Y, & Z positions in a 3D vector (vector3).
-        Vector3 cameraCoords = new Vector3(ranX, ranY, ranZ);
-        //Converts the camera coordinates over to a position within the scene's world and stores it. 
-        Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(cameraCoords);
+        Vector3 ranOffset = new Vector3(ranX, ranY, ranZ);
+        //Stores the position of the ball's spawn point.
+        Vector3 spawnPointPosition = transform.position;
+        //Converts the position of the spawner and the offset over to a random position adjacent to the spawn point. 
+        Vector3 spawnPosition = spawnPointPosition + ranOffset;
         
         //Spawns a ball on the spawn position with it randomly rotated.
         Instantiate(ballPrefab, spawnPosition, Random.rotation);
